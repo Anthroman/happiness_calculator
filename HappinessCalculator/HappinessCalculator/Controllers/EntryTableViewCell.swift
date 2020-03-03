@@ -30,7 +30,7 @@ class EntryTableViewCell: UITableViewCell {
         updateUI(averageHappiness: averageHappiness)
     }
     
-    func updateUI(averageHappiness: Int) {
+    @objc func updateUI(averageHappiness: Int) {
         guard let entry = entry else {return}
         titleLabel.text = entry.title
         isEnabled.isOn = entry.isIncluded
