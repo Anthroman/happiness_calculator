@@ -10,6 +10,8 @@ import UIKit
 
 class EntryListTableViewController: UITableViewController {
 
+    var averageHappiness: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -28,5 +30,25 @@ class EntryListTableViewController: UITableViewController {
         // Configure the cell...
 
         return cell
+    }
+    
+    func updateAverageHappiness() {
+        var totalHappiness = 0
+        for entry in EntryController.entries {
+            if entry.isIncluded {
+                totalHappiness += entry.happiness
+            }
+        }
+        averageHappiness = totalHappiness / EntryController.entries.count
+    }
+}
+
+extension EntryListTableViewController: EntryTableViewCellDelegate {
+    func switchToggledOnCell(cell: EntryTableViewCell) {
+        guard let entry = cell.entry else {return}
+        
+        EntryController.updateEntry(entry: entry)
+        updateAverageHappiness()
+        cell.updateUI(averageHappiness: averageHappiness)
     }
 }
