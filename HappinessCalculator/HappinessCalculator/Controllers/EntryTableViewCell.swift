@@ -34,8 +34,11 @@ class EntryTableViewCell: UITableViewCell {
         guard let entry = entry else {return}
         titleLabel.text = entry.title
         isEnabled.isOn = entry.isIncluded
-        
         higherOrLower.text = entry.happiness >= averageHappiness ? "Higher" : "Lower"
+    }
+    
+    func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUI), name: notificationKey, object: nil)
     }
     
     // toggled the IsIncluded Value
